@@ -1,15 +1,17 @@
-version: 2.1
 jobs:
   test:
-    - image: cimg/ruby:2.7.1-node-browsers
+    docker:
+      - image: 'cimg/base:stable-browsers'
     steps:
       - checkout
       - node/install-packages:
           cache-path: ~/project/node_modules
           override-ci-command: npm install
       - run: npm run test
-
+orbs:
+  node: circleci/node@3.0.0
+version: 2.1
 workflows:
-  node-tests:
+  test_my_app:
     jobs:
-      - node/test
+      - test
