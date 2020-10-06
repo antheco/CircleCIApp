@@ -31,8 +31,8 @@ function testing(callback) {
   console.log('Button clicked.');
   var textAfter = driver.findElement(By.id('text1')).getText().then(function(el){
     console.log("[After] text1: " + el);
-    //assert(textBefore === textAfter);
-    assert('1' === '2');
+    assert(textBefore === textAfter);
+    //assert('1' === '2');
   });
 }
 
