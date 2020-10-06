@@ -7,13 +7,13 @@ jobs:
       - image: 'circleci/node:14.5-browsers'
     steps:
       - checkout
+      - node/install-packages
       - run: node app1.js
   old-test:
     docker:
       - image: 'circleci/node:14.5-browsers'
     steps:
       - checkout
-      - node/install-packages
       - run: node test/newTest1.js
 workflows:
   test_my_app:
