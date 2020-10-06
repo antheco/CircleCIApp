@@ -18,8 +18,9 @@ function startWebsite() {
 };
 
 function testing(callback) {
-  var textBefore = driver.findElement(By.id('text1')).getText().then(function(el){
+  var prom1 = driver.findElement(By.id('text1')).getText().then(function(el){
     console.log("[Before] text1: " + el);
+    textBefore = el;
   });
   var button1 = driver.findElement(By.id('Button1')).getText().then(function(el){
     //console.log("button1 text: " + el);
@@ -29,21 +30,29 @@ function testing(callback) {
   //button1.click();
   
   console.log('Button clicked.');
-  var textAfter = driver.findElement(By.id('text1')).getText().then(function(el){
-    console.log("[After] text1: " + el);
-    //assert(textBefore === textAfter);
-    assert('1' === '2');
+  var prom2 = driver.findElement(By.id('text1')).getText().then(function(el){
+  console.log("[After] text1: " + el);
+  textAfter = el;
+  //assert(textBefore === textAfter);
+  try{
+    //assert('1' === '1');
+    assert(textBefore !== textAfter);
+    console.log('TEST PASSED: Text changed after button press.');
+  }
+  catch{
+    console.log('TEST FAILED: Text did not changed after button press.');
+  }
   });
 }
 
 //testing();
 
 function endProgram(number, callback) {
-  driver.wait(function() {
-    return driver.executeScript('return document.readyState').then(function(readyState) {
-      return readyState === 'complete';
-    });
-  });
+  // driver.wait(function() {
+  //   return driver.executeScript('return document.readyState').then(function(readyState) {
+  //     return readyState === 'complete';
+  //   });
+  // });
     process.exit(1);
 };
 
