@@ -13,10 +13,12 @@ function startWebsite() {
   .setChromeOptions(new chrome.Options().addArguments("start-maximized"))
   //  .add_experimental_option('excludeSwitches', ['enable-logging'])
   .build();
+  
   driver.get('http://localhost:3000');
   
 };
 
+//execute testing actions
 function testing(callback) {
   var textBefore = driver.findElement(By.id('text1')).getText().then(function(el){
     console.log("[Before] text1: " + el);
@@ -26,30 +28,40 @@ function testing(callback) {
   });
   // driver.wait(until.elementLocated(By.id('text1')));
   driver.findElement(By.id('Button1')).click();
-  //button1.click();
+};
+
+//end program
+function endProgram(number, callback) {
+  process.exit(1);
+};
+
+//begin mocha testing suite commands
+describe('open browser', function(){
+  this.timeout(8000);
+  startWebsite();
+ 
+
+  beforeEach(function(done){
+    console.log('Running beforeEach.');
+    setTimeout(done,7000);
+  })
   
-  console.log('Button clicked.');
-  var textAfter = driver.findElement(By.id('text1')).getText().then(function(el){
+
+  it('Observe page changes after button click', function(){
+    console.log('Button clicked.');
+    var textAfter = driver.findElement(By.id('text1')).getText().then(function(el){
     console.log("[After] text1: " + el);
-    assert(textBefore === textAfter);
-    //assert('1' === '2');
+    //assert.equal(textBefore, textAfter,'The text before the button click and after the button click are different. Test passed.');
+    assert('1' !== '2');
+    });
   });
-}
+});
 
 //testing();
 
-function endProgram(number, callback) {
-  driver.wait(function() {
-    return driver.executeScript('return document.readyState').then(function(readyState) {
-      return readyState === 'complete';
-    });
-  });
-    process.exit(1);
-};
 
-startWebsite();
-setTimeout(testing,5000);//waits 5 seconds then executes function inside
-setTimeout(endProgram,7000);
+//setTimeout(testing,5000);//waits 5 seconds then executes function inside
+//setTimeout(endProgram,7000);
 //endProgram(1,testing(startWebsite()));
 
 //driver.quit();

@@ -1,0 +1,17 @@
+jobs:
+  test:
+    docker:
+      - image: 'circleci/node:14.5-browsers'
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+      - run: npm run test
+orbs:
+  node: circleci/node@4.1.0
+version: 2.1
+workflows:
+  test_my_app:
+    jobs:
+      - test
